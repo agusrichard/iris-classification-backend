@@ -11,4 +11,7 @@ def create_app(config_class=Config):
 
 	db.init_app(app)
 
+	from .views.user import user
+	app.register_blueprint(user)
+
 	return app
