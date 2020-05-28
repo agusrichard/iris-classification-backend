@@ -22,6 +22,7 @@ class Iris(db.Model):
     petal_width = db.Column(db.Float)
     sepal_length = db.Column(db.Float)
     sepal_width = db.Column(db.Float)
+    label = db.Column(db.String(16))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
