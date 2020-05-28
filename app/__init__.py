@@ -13,6 +13,8 @@ def create_app(config_class=Config):
 	
 
 	from .views.user import user
+	from .views.iris import iris
 	app.register_blueprint(user)
+	app.register_blueprint(iris)
 
 	return app
