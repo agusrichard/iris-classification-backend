@@ -4,7 +4,7 @@ from app import db
 from ..model import Iris
 
 def populate_iris():
-    file_path = os.path.join(os.path.dirname(__file__), 'iris.csv')
+    file_path = os.path.join(current_app.root_path, 'static/estimator/iris.csv')
     with open(file_path, 'r') as file:
         row = file.readline()
         while True:
