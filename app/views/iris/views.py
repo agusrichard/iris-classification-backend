@@ -2,6 +2,8 @@ from flask import jsonify, request
 from . import iris
 from ...model import Iris
 from ... import db
+from ...estimator.make_prediction import make_prediction
+
 
 @iris.route('/iris', methods=['GET'])
 def get_all_iris():
@@ -87,4 +89,11 @@ def create_iris():
             'petal_width': float(iris.petal_width),
             'label': iris.label,
         }
+    })
+
+@iris.route('/iris/predict', methods=['POST'])
+def get_prediction():
+    return jsonify({
+        'success': True,
+        'message': 'Sekardayu Hana Pradiani'
     })
