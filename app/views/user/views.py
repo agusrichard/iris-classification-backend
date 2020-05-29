@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import user
 from ... import db
 from ...model import User
+from ...utilities.user import token_required
 
 
 @user.route('/auth/register', methods=['POST'])
@@ -39,6 +40,7 @@ def register():
             'success': False,
             'message': 'Internal error'
         }), 500
+
 
 @user.route('/auth/login', methods=['POST'])
 def login():
@@ -91,8 +93,10 @@ def login():
             'message': 'Internal error'
         }), 500
 
+
 @user.route('/user', methods=['GET'])
-def get_all_users():
+@token_required
+def get_all_users(current_user):
     try:
         users = User.query.all()
 
@@ -118,33 +122,49 @@ def get_all_users():
         return jsonify({
             'success': False,
             'message': 'Internal error'
-        })
+        }), 500
 
-@user.route('/user/<user_id>', methods=['GET'])
-def get_one_user(user_id):
+
+@user.route('/user/profile', methods=['GET'])
+@token_required
+def get_one_user(current_user):
     try:
-        user = User.query.filter_by(id=user_id).first()
-
-        if not user:
+        if not current_user:
             return jsonify({
                 'success': False,
                 'message': 'User not found'
             }), 404
 
-
         return jsonify({
             'success': True,
-            'message': 'Success to get user with id ' + user_id,
+            'message': 'Success to get user with id ' + str(current_user.id),
             'data': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'password': user.password
+                'id': current_user.id,
+                'username': current_user.username,
+                'email': current_user.email,
+                'password': current_user.password
             }
         })
     except:
         return jsonify({
             'success': False,
             'message': 'Internal error'
-        })
+        }), 500
 
+
+@user.route('/user', methods=['DELETE'])
+@token_required
+def delete_user(current_user):
+    try:
+        print(current_user)
+        db.session.delete(current_user)
+        db.session.commit()
+        return jsonify({
+            'success': True,
+            'message': 'Success to delete user'
+        })
+    except:
+        return jsonify({
+            'success': False,
+            'message': 'Internal error'
+        }), 500

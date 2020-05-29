@@ -20,7 +20,7 @@ def token_required(f):
             data = jwt.decode(token, current_app.config['SECRET_KEY'])
             current_user = User.query.filter_by(id=data['id']).first()
         except:
-            return jsonify({'message': 'Token invalid'}), 401
+            return jsonify({'message': 'Invalid token'}), 401
 
         return f(current_user, *args, **kwargs)
 
