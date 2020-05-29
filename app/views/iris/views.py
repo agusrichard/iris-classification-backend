@@ -1,3 +1,4 @@
+import numpy as np
 from flask import jsonify, request
 from . import iris
 from ...model import Iris
@@ -93,7 +94,12 @@ def create_iris():
 
 @iris.route('/iris/predict', methods=['POST'])
 def get_prediction():
+    data = request.get_json()
+    arr = [data.get('sepal_length'), data.get('sepal_width'), data.get('petal_length'), data.get('petal_width')]
+    arr = np.array(arr).reshape(1, -1)
+    prediction = make_prediction(arr)
     return jsonify({
         'success': True,
-        'message': 'Sekardayu Hana Pradiani'
+        'message': 'Sekardayu Hana Pradiani',
+        'data': prediction
     })

@@ -9,6 +9,6 @@ def make_prediction(x):
 	if prediction == 0:
 		return "Iris Setosa"
 	elif prediction == 1:
-		return "Iris Virginica"
-	else:
 		return "Iris Versicolor"
+	else:
+		return "Iris Virginica"
