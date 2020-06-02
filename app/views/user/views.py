@@ -168,3 +168,10 @@ def delete_user(current_user):
             'success': False,
             'message': 'Internal error'
         }), 500
+
+@user.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        'success': True,
+        'message': 'Welcome to our REST API'
+    })

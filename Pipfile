@@ -13,6 +13,7 @@ pyjwt = "*"
 scikit-learn = "*"
 pandas = "*"
 numpy = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
