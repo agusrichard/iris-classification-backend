@@ -12,6 +12,7 @@ from ...utilities.user import token_required
 def register():
     try:
         data = request.get_json()
+        print('register data', data)
 
         if not data or not data.get('email') or not data.get('password'):
             return jsonify({'message': 'Please provide the required fields'}), 400
@@ -35,7 +36,8 @@ def register():
                 'fullname': data['username']
             }
         })
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({
             'success': False,
             'message': 'Internal error'
